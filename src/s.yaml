@@ -3,26 +3,41 @@ name: image-compress
 access: '{{ access }}'
 vars:
   region: '{{ region }}'
+  bucketName: '{{ oss_bucket }}'
+  bucketEndpoint: "oss-{{region}}.aliyuncs.com"
 resources:
   framework:
     component: fc3
+    actions:
+      complete-deploy:
+        - plugin: cap-tool-plugin
+          args: # 插件的参数
+            schema: ${file(./toolset.yaml)}
     props:
       region: ${vars.region}
       description: image compress
-      runtime: python3.9
       handler: index.handler
+      runtime: python3.12
+      code: ./code
       memorySize: 1024
       timeout: 300
       functionName: '{{ functionName }}'
-      code: ./code
       role: '{{ roleArn }}'
-  fc3_domain_0:
-    component: fc3-domain
-    props:
-      region: ${vars.region}
-      domainName: auto
-      protocol: HTTP
-      routeConfig:
-        routes:
-          - path: /*
-            functionName: '{{ functionName }}'
+
+      environmentVariables:
+        OSS_ENDPOINT: "${vars.bucketEndpoint}"
+        OSS_BUCKET: '${vars.bucketName}'
+
+      triggers:
+        - triggerName: httpTrigger 
+          triggerType: http 
+          qualifier: LATEST 
+          triggerConfig: 
+            authType: anonymous 
+            disableURLInternet: false 
+            methods: 
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS

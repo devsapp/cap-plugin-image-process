@@ -1,0 +1,136 @@
+name: image-process
+description: 图片拼接/水印/格式转换
+
+spec:
+  schema:
+    type: OpenAPI
+    detail: 
+      openapi: 3.0.1
+      info:
+        title: 图片拼接/水印/格式转换
+        description:  调用 Wand API，读取、保存、编辑和显示图像，支持多种常见的图像文件格式，包括JPEG、PNG、GIF等。Wand 提供了便捷的方法来读取和保存这些格式的文件。
+        version: "v1"
+      servers:
+        - url: ""
+      paths:
+        /pinjie:
+          get:
+            operationId: pinjieImages
+            summary: 拼接两张图片
+            parameters:
+              - name: left
+                in: query
+                required: true
+                schema:
+                  type: string
+                  format: uri
+                description: 左侧图片的URL
+                example: https://example.com/image1.jpg
+              - name: right
+                in: query
+                required: true
+                schema:
+                  type: string
+                  format: uri
+                description: 右侧图片的URL
+                example: https://example.com/image2.png
+              - name: fmt
+                in: query
+                required: false
+                schema:
+                  type: string
+                  enum: [jpg, png, tiff]
+                  default: jpg
+                description: 输出图片的格式
+            responses:
+              '200':
+                description: 成功拼接图片
+                content:
+                  text/html:
+                    schema:
+                      type: string
+        
+        /watermark:
+          get:
+            operationId: addWatermark
+            summary: 给图片添加水印
+            parameters:
+              - name: img
+                in: query
+                required: true
+                schema:
+                  type: string
+                  format: uri
+                description: 需要添加水印的图片URL
+              - name: text
+                in: query
+                required: true
+                schema:
+                  type: string
+                description: 水印文字
+              - name: fmt
+                in: query
+                required: false
+                schema:
+                  type: string
+                  enum: [jpg, png, tiff]
+                  default: jpg
+                description: 输出图片的格式
+            responses:
+              '200':
+                description: 成功添加水印
+                content:
+                  text/html:
+                    schema:
+                      type: string
+
+        /format:
+          get:
+            operationId: convertFormat
+            summary: 转换图片格式
+            parameters:
+              - name: img
+                in: query
+                required: true
+                schema:
+                  type: string
+                  format: uri
+                description: 需要转换格式的图片URL
+              - name: fmt
+                in: query
+                required: true
+                schema:
+                  type: string
+                  enum: [jpg, png, tiff, webp]
+                description: 目标格式
+            responses:
+              '200':
+                description: 成功转换格式
+                content:
+                  text/html:
+                    schema:
+                      type: string
+
+        /gray:
+          get:
+            operationId: convertToGrayscale
+            summary: 将图片转换为灰度
+            parameters:
+              - name: img
+                in: query
+                required: true
+                schema:
+                  type: string
+                  format: uri
+                description: 需要转换为灰度的图片URL
+            responses:
+              '200':
+                description: 成功转换为灰度
+                content:
+                  text/html:
+                    schema:
+                      type: string
+
+      # components:
+      #   schemas: {}
+      
