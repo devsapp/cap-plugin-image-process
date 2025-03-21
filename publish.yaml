@@ -4,7 +4,7 @@ Name: image-process
 Provider:
   - 阿里云
 Description: 本案例将 Wand，这一功能强大、易于使用的Python图像处理库，快速搭建并部署到阿里云云应用平台 CAP
-Version: 1.0.0
+Version: 1.0.1
 
 Organization: 阿里云函数计算（FC）
 Effective: Public
@@ -51,15 +51,15 @@ Parameters:
         - us-east-1
         - ap-south-1
     roleArn:
-      title: RAM角色ARN
+      title: RAM 角色 ARN
       type: string
       default: ''
       pattern: '^acs:ram::[0-9]*:role/.*$'
       description: 应用所属的函数计算服务配置的 role
       required: true
       x-role:
-        name: fcossrole
-        service: fc
+        name: oss-default-role
+        service: FC
         authorities:
           - AliyunOSSFullAccess
 

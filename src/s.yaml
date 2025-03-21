@@ -21,6 +21,7 @@ resources:
       code: ./code
       memorySize: 1024
       timeout: 300
+      logConfig: auto
       functionName: '{{ functionName }}'
       role: '{{ roleArn }}'
 
