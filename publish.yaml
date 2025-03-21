@@ -4,7 +4,7 @@ Name: image-process
 Provider:
   - 阿里云
 Description: 本案例将 Wand，这一功能强大、易于使用的Python图像处理库，快速搭建并部署到阿里云云应用平台 CAP
-Version: 1.0.1
+Version: 1.0.2
 
 Organization: 阿里云函数计算（FC）
 Effective: Public

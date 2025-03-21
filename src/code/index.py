@@ -36,7 +36,8 @@ def upload_to_oss(img_blob, img_type):
         logging.error(f"Failed to upload file: {e}")
 
     # 生成公开访问的 URL
-    return f"https://{OSS_BUCKET}.{OSS_ENDPOINT}/{file_name}"
+    url = bucket.sign_url('GET', file_name, 600, slash_safe=True)
+    return url
 
 
 def download_image(url):
